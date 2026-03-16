@@ -37,9 +37,5 @@ services:
     networks:
       - web
 
-networks:
-  web:
-    name: web
-
 volumes:
   traefik_data:

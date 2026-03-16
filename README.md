@@ -41,9 +41,17 @@ cp .env.example .env
 # Download dependencies
 1. n8n
 ```sh
-cd dependencies/n8n
-git clone git@github.com:tiagoramirez/n8n.git &&
-cd ../..
+cd dependencies/
+mv n8n/docker-compose.override.yml docker-compose.override.yml
+rm -r n8n
+git clone git@github.com:tiagoramirez/n8n.git
+mv docker-compose.override.yml n8n/docker-compose.override.yml
+cd ..
+```
+
+# Create network
+```sh
+docker network create web
 ```
 
 # Run server
