@@ -1,3 +1,8 @@
+include:
+  - path:
+      - ./dependencies/n8n/docker-compose.yml
+      - ./dependencies/n8n/docker-compose.override.yml
+
 services:
   traefik:
     image: "traefik:latest"

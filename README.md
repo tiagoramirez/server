@@ -29,13 +29,21 @@ chmod 700 ~/.ssh/github
 
 # Clone
 ```sh
-git clone git@github.com:tiagoramirez/n8n.git &&
-cd n8n
+git clone git@github.com:tiagoramirez/server.git &&
+cd server
 ```
 
 # Setup .env and modify it
 ```sh
 cp .env.example .env
+```
+
+# Download dependencies
+1. n8n
+```sh
+cd dependencies/n8n
+git clone git@github.com:tiagoramirez/n8n.git &&
+cd ../..
 ```
 
 # Run server
