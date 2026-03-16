@@ -34,9 +34,9 @@ services:
       - ./home:/usr/share/nginx/html:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.homepage-http.rule=Host(`${SSL_DOMAIN}`) || Host(`www.${SSL_DOMAIN}`)"
+      - "traefik.http.routers.homepage-http.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
       - "traefik.http.routers.homepage-http.entrypoints=web"
-      - "traefik.http.routers.homepage-https.rule=Host(`${SSL_DOMAIN}`) || Host(`www.${SSL_DOMAIN}`)"
+      - "traefik.http.routers.homepage-https.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
       - "traefik.http.routers.homepage-https.entrypoints=websecure"
       - "traefik.http.routers.homepage-https.tls.certresolver=mytlschallenge"
     networks:
