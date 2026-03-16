@@ -11,6 +11,11 @@
             box-sizing: border-box;
         }
 
+        html {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f3a 100%);
+            background-attachment: fixed;
+        }
+
         html, body {
             height: 100%;
             width: 100%;
@@ -33,7 +38,7 @@
             background-attachment: fixed;
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 20px;
             color: var(--text-primary);
@@ -128,6 +133,8 @@
             font-weight: 700;
             margin-bottom: 8px;
             color: var(--text-primary);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .route-domain {
@@ -136,6 +143,9 @@
             font-weight: 500;
             margin-bottom: 12px;
             font-family: 'Monaco', 'Courier New', monospace;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
         }
 
         .route-description {
@@ -159,7 +169,8 @@
 
         .footer {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 3em;
+            margin-bottom: 1em;
             color: var(--text-secondary);
             font-size: 0.9rem;
             animation: fadeIn 0.6s ease-out 0.4s both;
@@ -196,22 +207,175 @@
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .header h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .route-title {
+                font-size: 1.1rem;
+            }
+
+            .route-description {
+                font-size: 0.85rem;
+            }
+
+            .route-icon {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 16px;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            .header {
+                margin-bottom: 32px;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
             }
 
             .routes-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
             }
 
             .route-card {
-                padding: 20px;
+                padding: 16px;
+                min-height: 160px;
+            }
+
+            .route-icon {
+                font-size: 1.75rem;
+                margin-bottom: 8px;
+            }
+
+            .route-title {
+                font-size: 1rem;
+            }
+
+            .route-domain {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+
+            .route-description {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            .route-arrow {
+                margin-top: 8px;
+            }
+
+            .footer {
+                margin-top: 40px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
             }
 
             .header {
-                margin-bottom: 40px;
+                margin-bottom: 24px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .route-card {
+                padding: 12px;
+                min-height: 140px;
+            }
+
+            .route-icon {
+                font-size: 1.5rem;
+            }
+
+            .route-title {
+                font-size: 0.95rem;
+            }
+
+            .route-domain {
+                font-size: 0.75rem;
+            }
+
+            .footer {
+                margin-top: 32px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            .header p {
+                font-size: 0.8rem;
+            }
+
+            .routes-grid {
+                gap: 10px;
+            }
+
+            .route-card {
+                padding: 10px;
+                min-height: 120px;
+            }
+
+            .route-icon {
+                font-size: 1.25rem;
+                margin-bottom: 6px;
+            }
+
+            .route-title {
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+            }
+
+            .route-domain {
+                font-size: 0.65rem;
+                margin-bottom: 6px;
+            }
+
+            .route-description {
+                font-size: 0.75rem;
+            }
+
+            .route-arrow {
+                margin-top: 6px;
+            }
+
+            .footer {
+                margin-top: 24px;
+                font-size: 0.75rem;
             }
         }
     </style>
