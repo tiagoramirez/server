@@ -48,5 +48,5 @@ cd ../..
 
 # Run server
 ```sh
-docker-compose up -d
+docker-compose -f docker-compose.yml -f dependencies/n8n/docker-compose.yml -f dependencies/n8n/docker-compose.override.yml up -d
 ```
