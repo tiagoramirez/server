@@ -1,0 +1,45 @@
+services:
+  traefik:
+    image: "traefik:latest"
+    restart: always
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=web"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}"
+      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - traefik_data:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - web
+
+  homepage:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./home:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage-http.rule=Host(`${SSL_DOMAIN}`) || Host(`www.${SSL_DOMAIN}`)"
+      - "traefik.http.routers.homepage-http.entrypoints=web"
+      - "traefik.http.routers.homepage-https.rule=Host(`${SSL_DOMAIN}`) || Host(`www.${SSL_DOMAIN}`)"
+      - "traefik.http.routers.homepage-https.entrypoints=websecure"
+      - "traefik.http.routers.homepage-https.tls.certresolver=mytlschallenge"
+    networks:
+      - web
+
+networks:
+  web:
+    name: web
+
+volumes:
+  traefik_data:

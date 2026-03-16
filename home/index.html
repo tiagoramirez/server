@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiago Ramirez - Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --accent: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f3a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        @media (max-width: 768px) {
+            .routes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .route-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 28px 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+        }
+
+        .route-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .route-card:hover::before {
+            left: 100%;
+        }
+
+        .route-card:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .route-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .route-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .route-domain {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 12px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .route-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .route-arrow {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .route-card:hover .route-arrow {
+            transform: translateX(4px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            animation: fadeIn 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .routes-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .route-card {
+                padding: 20px;
+            }
+
+            .header {
+                margin-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tiago Ramirez</h1>
+            <p>Portal</p>
+        </div>
+
+        <div class="routes-grid">
+
+            <!-- GitHub -->
+            <a href="https://github.com/tiagoramirez" class="route-card">
+                <div>
+                    <div class="route-icon">💻</div>
+                    <div class="route-title">GitHub</div>
+                    <div class="route-domain">github.com/tiagoramirez</div>
+                    <div class="route-description">Code repository. Check out my projects and contributions.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/tiagoramirezmar" class="route-card">
+                <div>
+                    <div class="route-icon">💼</div>
+                    <div class="route-title">LinkedIn</div>
+                    <div class="route-domain">linkedin.com/in/tiagoramirezmar</div>
+                    <div class="route-description">Professional profile. Connect with me on LinkedIn for updates and opportunities.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+
+            <!-- N8N -->
+            <a href="https://n8n.tiagoramirez.lat" class="route-card">
+                <div>
+                    <div class="route-icon">⚙️</div>
+                    <div class="route-title">N8N</div>
+                    <div class="route-domain">n8n.tiagoramirez.lat</div>
+                    <div class="route-description">Workflow automation platform. Build and manage complex automations visually.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+
+            <!-- Contact -->
+            <a href="mailto:tiagoramirez.dev@pm.me" class="route-card">
+                <div>
+                    <div class="route-icon">✉️</div>
+                    <div class="route-title">Contact</div>
+                    <div class="route-domain">tiagoramirez.dev@pm.me</div>
+                    <div class="route-description">Get in touch. Send me an email for inquiries and collaborations.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Tiago Ramirez. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
