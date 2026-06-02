@@ -1,0 +1,8 @@
+.env
+
+/dependencies/
+!/dependencies/
+!/dependencies/*/
+!/dependencies/**/docker-compose.override.yml
+/dependencies/*/*
+!/dependencies/*/docker-compose.override.yml

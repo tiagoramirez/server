@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiago Ramirez - Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            --primary: #10b981;
+            --primary-light: #34d399;
+            --secondary: #10b981;
+            --accent: #10b981;
+            --bg-dark: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-card: #050505;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: rgba(16, 185, 129, 0.1);
+        }
+
+        html {
+            background: #000000;
+            background-attachment: fixed;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #000000;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            text-rendering: optimizeLegibility;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: headerSlideIn 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            animation: gridSlideIn 0.8s cubic-bezier(0.23, 1, 0.320, 1) 0.1s both;
+        }
+
+        .route-card {
+            position: relative;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .route-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.4), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .route-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .route-card:nth-child(1) { animation: cardEnter 0.6s cubic-bezier(0.23, 1, 0.320, 1) 0.2s both; }
+        .route-card:nth-child(2) { animation: cardEnter 0.6s cubic-bezier(0.23, 1, 0.320, 1) 0.3s both; }
+        .route-card:nth-child(3) { animation: cardEnter 0.6s cubic-bezier(0.23, 1, 0.320, 1) 0.4s both; }
+        .route-card:nth-child(4) { animation: cardEnter 0.6s cubic-bezier(0.23, 1, 0.320, 1) 0.5s both; }
+
+        .route-card:hover {
+            border-color: rgba(16, 185, 129, 0.6);
+            transform: translateY(-12px);
+            background: rgba(30, 41, 59, 0.4);
+            box-shadow:
+                0 0 40px rgba(16, 185, 129, 0.35),
+                0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .route-card:hover::before {
+            opacity: 1;
+        }
+
+        .route-card:hover::after {
+            opacity: 1;
+        }
+
+        .route-card:hover .route-icon {
+            transform: scale(1.1) rotateZ(5deg);
+        }
+
+        .route-card:hover .route-arrow {
+            transform: translateX(6px);
+            color: var(--primary);
+        }
+
+        .route-icon {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .route-icon::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .route-card:hover .route-icon::after {
+            opacity: 1;
+        }
+
+        .route-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 2;
+            letter-spacing: -0.005em;
+            line-height: 1.3;
+        }
+
+        .route-domain {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 14px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            position: relative;
+            z-index: 2;
+            opacity: 0.9;
+        }
+
+        .route-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            flex-grow: 1;
+            position: relative;
+            z-index: 2;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .route-arrow {
+            display: inline-block;
+            margin-top: 16px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            animation: fadeIn 0.8s ease-out 0.6s both;
+            letter-spacing: 0.02em;
+        }
+
+        @keyframes headerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gridSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 32px 20px;
+            }
+
+            .routes-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header {
+                margin-bottom: 60px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .route-card {
+                padding: 24px 20px;
+                min-height: 220px;
+            }
+
+            .route-icon {
+                font-size: 2.4rem;
+                margin-bottom: 12px;
+            }
+
+            .route-title {
+                font-size: 1.2rem;
+            }
+
+            .route-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .header {
+                margin-bottom: 48px;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 0.95rem;
+            }
+
+            .routes-grid {
+                gap: 16px;
+            }
+
+            .route-card {
+                padding: 20px 16px;
+                min-height: 200px;
+            }
+
+            .route-icon {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            .route-title {
+                font-size: 1.1rem;
+            }
+
+            .route-domain {
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+            }
+
+            .route-description {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+
+            .route-arrow {
+                margin-top: 12px;
+                font-size: 1rem;
+            }
+
+            .footer {
+                margin-top: 60px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .header {
+                margin-bottom: 32px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .routes-grid {
+                gap: 12px;
+            }
+
+            .route-card {
+                padding: 16px 12px;
+                min-height: 180px;
+            }
+
+            .route-icon {
+                font-size: 1.8rem;
+            }
+
+            .route-title {
+                font-size: 1rem;
+            }
+
+            .route-domain {
+                font-size: 0.75rem;
+            }
+
+            .footer {
+                margin-top: 40px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tiago Ramirez</h1>
+            <p>Portal</p>
+        </div>
+
+        <div class="routes-grid">
+            <!-- GitHub -->
+            <a href="https://github.com/tiagoramirez" class="route-card">
+                <div>
+                    <div class="route-icon">💻</div>
+                    <div class="route-title">GitHub</div>
+                    <div class="route-domain">github.com/tiagoramirez</div>
+                    <div class="route-description">Code repository. Check out my projects and contributions.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/tiagoramirezmar" class="route-card">
+                <div>
+                    <div class="route-icon">💼</div>
+                    <div class="route-title">LinkedIn</div>
+                    <div class="route-domain">linkedin.com/in/tiagoramirezmar</div>
+                    <div class="route-description">Professional profile. Connect with me on LinkedIn for updates and opportunities.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+
+            <!-- N8N -->
+            <a href="https://n8n.tiagoramirez.lat" class="route-card">
+                <div>
+                    <div class="route-icon">⚙️</div>
+                    <div class="route-title">N8N</div>
+                    <div class="route-domain">n8n.tiagoramirez.lat</div>
+                    <div class="route-description">Workflow automation platform. Build and manage complex automations visually.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+
+            <!-- Contact -->
+            <a href="mailto:tiagoramirez.dev@pm.me" class="route-card">
+                <div>
+                    <div class="route-icon">✉️</div>
+                    <div class="route-title">Contact</div>
+                    <div class="route-domain">tiagoramirez.dev@pm.me</div>
+                    <div class="route-description">Get in touch. Send me an email for inquiries and collaborations.</div>
+                </div>
+                <div class="route-arrow">↗</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Tiago Ramirez. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
